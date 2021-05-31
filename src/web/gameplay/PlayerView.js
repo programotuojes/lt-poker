@@ -56,7 +56,7 @@ function PlayerView({ player, name, isActive, showCards, won }) {
 
               {player.isCorrect !== undefined && (
                 <Typography style={{ color: (player.isCorrect && 'green') || 'red' }} align={'center'}>
-                  {(player.isCorrect && 'Correctly called bluff') || 'Called bluff and fucked up'}
+                  {(player.isCorrect && 'Correctly called bluff') || 'Called bluff incorrectly'}
                 </Typography>
               )}
 
