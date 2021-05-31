@@ -1,4 +1,5 @@
-export const BACKEND_URL = 'http://10.0.0.10:8000';
+const { protocol, hostname, port } = window.location;
+export const BACKEND_URL = `${protocol}//${hostname}:${port}`;
 
 export const USERNAME = 'username';
 export const CREDENTIALS = 'credentials';
