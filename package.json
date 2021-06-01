@@ -9,6 +9,7 @@
     "@material-ui/lab": "^4.0.0-alpha.58",
     "boardgame.io": "^0.44.3",
     "esm": "^3.2.25",
+    "koa-sslify": "^5.0.0",
     "koa-static": "^5.0.0",
     "nanoid": "^3.1.23",
     "random-words": "^1.1.1",

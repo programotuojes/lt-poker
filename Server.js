@@ -1,5 +1,7 @@
 import { Server } from 'boardgame.io/server';
 import fs from 'fs';
+import enforceHttps from 'koa-sslify';
+import http from 'http';
 import serve from 'koa-static';
 import { nanoid } from 'nanoid';
 import path from 'path';
@@ -23,8 +25,11 @@ const server = Server({
 });
 
 const frontendPath = path.resolve(__dirname, './build');
+server.app.use(enforceHttps());
 server.app.use(serve(frontendPath));
 
 server.run(443, () => {
   server.app.use(async (ctx, next) => await serve(frontendPath)(Object.assign(ctx, { path: 'index.html' }), next));
 });
+
+http.createServer(server.app.callback()).listen(80);
