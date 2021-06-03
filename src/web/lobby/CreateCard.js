@@ -48,7 +48,9 @@ function CreateCard() {
     setUsernameError(null);
   }
 
-  async function handleCreate() {
+  async function handleCreate(event) {
+    event.preventDefault();
+
     const usernameError = checkUsername(username);
 
     if (usernameError) {
@@ -124,6 +126,7 @@ function CreateCard() {
 
             <Grid item xs={12} className={classes.center}>
               <Button
+                type={'submit'}
                 variant={'contained'}
                 color={'primary'}
                 onClick={handleCreate}>

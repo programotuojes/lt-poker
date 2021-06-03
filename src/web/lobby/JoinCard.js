@@ -47,7 +47,9 @@ function JoinCard() {
     setMatchIDError(null);
   }
 
-  async function handleJoin() {
+  async function handleJoin(event) {
+    event.preventDefault();
+
     const usernameError = checkUsername(username);
     const matchIDError = await checkMatchID(matchID, true);
 
@@ -119,6 +121,7 @@ function JoinCard() {
 
             <Grid item xs={12} className={classes.center}>
               <Button
+                type={'submit'}
                 variant={'contained'}
                 color={'primary'}
                 onClick={handleJoin}>
