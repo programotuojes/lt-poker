@@ -38,8 +38,9 @@ function PokerBoard({ G, ctx, moves, events, isActive, matchData }) {
         {Object.entries(G.players).map(([key, player]) => (
           <Grid item zeroMinWidth xs={12} sm={6} key={key}>
             <PlayerView
+              playerID={key}
               player={player}
-              name={matchData[key].name}
+              playerMatchData={matchData[key]}
               isActive={ctx.currentPlayer === key}
               showCards={allConnected}
               won={ctx.gameover && player.cardCount < 5}
