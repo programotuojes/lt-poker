@@ -5,8 +5,8 @@ import { Edit, Save } from '@material-ui/icons';
 import { LobbyClient } from 'boardgame.io/client';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { BACKEND_URL, CREDENTIALS, PLAYER_ID, USERNAME } from '../../constants/Constants';
-import { checkUsername } from '../validation/Validation';
+import { BACKEND_URL, CREDENTIALS, PLAYER_ID, USERNAME } from '../../../constants/Constants';
+import { checkUsername } from '../../util/Validation';
 
 const useStyles = makeStyles(() => ({
   editButton: {

@@ -7,7 +7,7 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import Gameplay from './web/gameplay/Gameplay';
+import PokerClient from './web/gameplay/PokerClient';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -23,7 +23,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path={'/match/:matchID'}>
-            <Gameplay />
+            <PokerClient />
           </Route>
 
           <Route exact path={'/'}>

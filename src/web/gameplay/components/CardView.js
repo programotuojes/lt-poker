@@ -1,5 +1,5 @@
 import React from 'react';
-import getImage from './ParseCard';
+import getImage from '../../util/ParseCard';
 import { makeStyles } from '@material-ui/core';
 
 const MOVE_BY = -50;

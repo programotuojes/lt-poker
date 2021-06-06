@@ -10,8 +10,8 @@ import Select from '@material-ui/core/Select';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import React, { useState } from 'react';
-import { Hands } from '../../constants/Hands';
-import { isHandValid } from '../../util/Validation';
+import { Hands } from '../../../constants/Hands';
+import { isHandValid } from '../../../util/Validation';
 
 const useStyles = makeStyles(() => ({
   buttonContainer: {

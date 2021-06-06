@@ -5,17 +5,17 @@ import PokerBoard from './PokerBoard';
 import { SocketIO } from 'boardgame.io/multiplayer';
 import { BACKEND_URL, CREDENTIALS, PLAYER_ID } from '../../constants/Constants';
 import { useHistory, useParams } from 'react-router-dom';
-import { checkMatchID } from '../validation/Validation';
-import Loading from '../useful/Loading';
+import { checkMatchID } from '../util/Validation';
+import Loading from '../components/Loading';
 
-const PokerClient = Client({
+const BGClient = Client({
   game: Poker,
   board: PokerBoard,
   multiplayer: SocketIO({ server: BACKEND_URL }),
   loading: Loading,
 });
 
-function Gameplay() {
+function PokerClient() {
   const history = useHistory();
 
   const [loading, setLoading] = useState(true);
@@ -37,7 +37,7 @@ function Gameplay() {
   return (
     <>
       {(loading && <Loading />) || (
-        <PokerClient
+        <BGClient
           playerID={playerID}
           matchID={matchID}
           credentials={credentials}
@@ -48,4 +48,4 @@ function Gameplay() {
   );
 }
 
-export default Gameplay;
+export default PokerClient;

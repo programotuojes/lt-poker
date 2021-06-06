@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
-import PlayerView from './PlayerView';
-import CombinationInput from './CombinationInput';
+import PlayerCard from './components/PlayerCard';
+import CombinationInput from './components/CombinationInput';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
@@ -37,7 +37,7 @@ function PokerBoard({ G, ctx, moves, events, isActive, matchData }) {
       <Grid container justify={'center'} spacing={4} className={classes.root}>
         {Object.entries(G.players).map(([key, player]) => (
           <Grid item zeroMinWidth xs={12} sm={6} key={key}>
-            <PlayerView
+            <PlayerCard
               playerID={key}
               player={player}
               playerMatchData={matchData[key]}

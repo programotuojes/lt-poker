@@ -2,7 +2,7 @@ import {
   callBluffFunction,
   distributeCards,
   raiseFunction,
-} from '../moves/Moves';
+} from './Moves';
 import initializeGame from '../util/InitialState';
 import stripSecrets from '../util/StripSecrets';
 

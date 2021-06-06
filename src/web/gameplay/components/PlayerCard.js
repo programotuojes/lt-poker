@@ -4,9 +4,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
-import { Hands } from '../../constants/Hands';
-import CardView from '../cardView/CardView';
-import './PlayerView.css';
+import { Hands } from '../../../constants/Hands';
+import CardView from './CardView';
+import './PlayerCard.css';
 import Username from './Username';
 
 const useStyles = makeStyles(() => ({
@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function PlayerView({ player, playerID, isActive, showCards, won, playerMatchData }) {
+function PlayerCard({ player, playerID, isActive, showCards, won, playerMatchData }) {
   const classes = useStyles();
 
   const calledHand = player.call && Hands[player.call.handIdx].name.toLowerCase();
@@ -68,4 +68,4 @@ function PlayerView({ player, playerID, isActive, showCards, won, playerMatchDat
   );
 }
 
-export default PlayerView;
+export default PlayerCard;

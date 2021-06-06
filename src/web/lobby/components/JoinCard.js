@@ -3,25 +3,17 @@ import { useHistory } from 'react-router-dom';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import {
-  FormHelperText,
-  InputLabel,
-  makeStyles,
-  MenuItem,
-  Select,
-  TextField,
-} from '@material-ui/core';
+import { makeStyles, TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import { checkUsername } from '../validation/Validation';
+import { checkMatchID, checkUsername } from '../../util/Validation';
 import { LobbyClient } from 'boardgame.io/client';
 import {
   BACKEND_URL,
   CREDENTIALS,
   PLAYER_ID,
   USERNAME,
-} from '../../constants/Constants';
-import FormControl from '@material-ui/core/FormControl';
+} from '../../../constants/Constants';
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -33,14 +25,16 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function CreateCard() {
+function JoinCard() {
   const classes = useStyles();
   const history = useHistory();
   const lobbyClient = new LobbyClient({ server: BACKEND_URL });
 
-  const [playerCount, setPlayerCount] = useState(2);
   const [username, setUsername] = useState('');
   const [usernameError, setUsernameError] = useState(null);
+
+  const [matchID, setMatchID] = useState('');
+  const [matchIDError, setMatchIDError] = useState(null);
 
   function handleUsername(event) {
     setUsername(event.target.value);
@@ -48,29 +42,37 @@ function CreateCard() {
     setUsernameError(null);
   }
 
-  async function handleCreate(event) {
+  function handleMatchID(event) {
+    setMatchID(event.target.value);
+    setMatchIDError(null);
+  }
+
+  async function handleJoin(event) {
     event.preventDefault();
 
     const usernameError = checkUsername(username);
+    const matchIDError = await checkMatchID(matchID, true);
 
-    if (usernameError) {
+    if (usernameError || matchIDError) {
       setUsernameError(usernameError);
+      setMatchIDError(matchIDError);
       return;
     }
 
-    const { matchID } = await lobbyClient.createMatch('lt-poker', {
-      numPlayers: playerCount,
-    });
+    const { players } = await lobbyClient.getMatch('lt-poker', matchID);
+    const playerID = players
+      .find((player) => player.name === undefined)
+      .id.toString();
     const { playerCredentials } = await lobbyClient.joinMatch(
       'lt-poker',
       matchID,
       {
-        playerID: '0',
+        playerID: playerID,
         playerName: username,
       }
     );
 
-    localStorage.setItem(PLAYER_ID, '0');
+    localStorage.setItem(PLAYER_ID, playerID);
     localStorage.setItem(CREDENTIALS, playerCredentials);
     history.push(`/match/${matchID}`);
   }
@@ -89,7 +91,7 @@ function CreateCard() {
                 className={classes.title}
                 align={'center'}
                 variant={'h5'}>
-                Create a match
+                Join a match
               </Typography>
             </Grid>
 
@@ -106,22 +108,15 @@ function CreateCard() {
             </Grid>
 
             <Grid item xs={12}>
-              <FormControl variant='outlined' fullWidth>
-                <InputLabel id='player-count-label'>Player count</InputLabel>
-                <Select
-                  labelId='player-count-label'
-                  id='player-count'
-                  value={playerCount}
-                  onChange={(e) => setPlayerCount(e.target.value)}
-                  label='Player count'>
-                  <MenuItem value={2}>2</MenuItem>
-                  <MenuItem value={3}>3</MenuItem>
-                  <MenuItem value={4}>4</MenuItem>
-                  <MenuItem value={5}>5</MenuItem>
-                  <MenuItem value={6}>6</MenuItem>
-                </Select>
-                <FormHelperText> </FormHelperText>
-              </FormControl>
+              <TextField
+                fullWidth
+                variant={'outlined'}
+                label={'Match ID'}
+                value={matchID}
+                onChange={handleMatchID}
+                error={!!matchIDError}
+                helperText={matchIDError || ' '}
+              />
             </Grid>
 
             <Grid item xs={12} className={classes.center}>
@@ -129,8 +124,8 @@ function CreateCard() {
                 type={'submit'}
                 variant={'contained'}
                 color={'primary'}
-                onClick={handleCreate}>
-                Create
+                onClick={handleJoin}>
+                Join
               </Button>
             </Grid>
           </Grid>
@@ -140,4 +135,4 @@ function CreateCard() {
   );
 }
 
-export default CreateCard;
+export default JoinCard;
